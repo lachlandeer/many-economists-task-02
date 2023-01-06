@@ -2,3 +2,4 @@ sandbox/*
 out/*
 *.csv.gz
 .snakemake
+log
