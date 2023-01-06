@@ -15,7 +15,7 @@ rule filter_ethnic_mex:
         data = "out/data/acs_ethnic_born_mexicans.csv",
     log:
         "log/data-mgt/filter_ethnic_born_mexicans.Rout"
-    script:
+    shell:
         "{runR} {input.script} {input.data} {output.data}  > {log} 2>&1"
 
 # --- Sub Rules --- #
