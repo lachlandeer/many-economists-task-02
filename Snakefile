@@ -2,6 +2,9 @@
 #
 # @lachlandeer
 
+# --- Variable Declarations ---# 
+runR = "Rscript --no-save --no-restore --verbose"
+
 # --- Data Cleaning --- # 
 
 rule filter_ethnic_mex:
@@ -13,4 +16,9 @@ rule filter_ethnic_mex:
     log:
         "log/data-mgt/filter_ethnic_born_mexicans.Rout"
     script:
-        "Rscript {input.script} {input.data} {output.data}  > {log} 2>&1"
+        "{runR} {input.script} {input.data} {output.data}  > {log} 2>&1"
+
+# --- Sub Rules --- #
+# Include all other Snakefiles that contain rules that are part of the project
+include: "renv.smk"
+
