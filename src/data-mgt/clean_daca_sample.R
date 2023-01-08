@@ -16,6 +16,7 @@
 # --- Libraries ---#
 library(vroom)
 library(dplyr)
+library(lubridate)
 
 #--- Command Line Args Unpacking ---# 
 args <- commandArgs(trailingOnly = TRUE)
