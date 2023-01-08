@@ -2,7 +2,16 @@
 #
 # What this file does:
 #
-#  -TBD
+#  - Keeps non-citizens
+#  - Generates Indicators for daca rules
+#  - Generates flag for if daca eligible based on rules
+#  - Generates cleaned up control variables 
+#  - Generates flags for different samples of data for the estimation:
+#     - aged 18 to 35 -- largest sample 
+#     - entered between 12 and 19 -- individuals in the "relevant window" for DACA
+#     - aged between 27 and 34  -- folks where age criteria is an issue for work eligibility
+#     - finished highschool   -- folks that completed high school (effects might differ if did/did not)
+#     - [Not yet implemented] finished college  -- folks that finished college (effects might differ if did did/not)
 
 # --- Libraries ---#
 library(vroom)
