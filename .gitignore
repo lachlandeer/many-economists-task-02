@@ -3,3 +3,5 @@ out/*
 *.csv.gz
 .snakemake
 log
+.Rproj.user
+*.csv
