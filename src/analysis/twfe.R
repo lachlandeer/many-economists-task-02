@@ -41,6 +41,7 @@ school <- fromJSON(file = data_hs)
 yrs    <- fromJSON(file = data_yrs)
 
 # --- Data Filtering --- #
+message("We are Starting with ", nrow(df), " rows of data")
 message("Here are the Data Filtering Criteria:")
 
 # eligibility
@@ -48,7 +49,7 @@ print("Eligibility:")
 print(elig$KEEP_CONDITION)
 
 # Filter on Eligibility if needed
-if (!all.equal(elig$KEEP_CONDITION, "NULL")) {
+if (!setequal(elig$KEEP_CONDITION, "NULL")) {
   df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
@@ -59,7 +60,7 @@ print("Schooling:")
 print(school$KEEP_CONDITION)
 
 # Filter on Schooling if needed
-if (!all.equal(school$KEEP_CONDITION, "NULL")) {
+if (!setequal(school$KEEP_CONDITION, "NULL")) {
   df <- subset(df, eval(parse(text = school$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
@@ -69,7 +70,7 @@ print(nrow(df))
 print("Years:")
 print(yrs$KEEP_CONDITION)
 # Filter on sample year if needed
-if (!all.equal(yrs$KEEP_CONDITION, "NULL")) {
+if (!setequal(yrs$KEEP_CONDITION, "NULL")) {
   df <- subset(df, eval(parse(text = yrs$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
