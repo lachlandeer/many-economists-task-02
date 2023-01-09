@@ -66,7 +66,7 @@ if (yrs$KEEP_CONDITION != "NULL") {
 depvar <- base$DEPVAR 
 exog   <- base$DID
 
-reg_fmla <- as.formula(paste(dep_var, " ~ ", exog, sep=""))
+reg_fmla <- paste(depvar, " ~ ", exog, sep="")
 
 # Fixed Effects
 fe <- fixedeff$VARS
@@ -82,7 +82,7 @@ if (controls$VARS != "NULL") {
 message("the regression formula is:")
 print(reg_fmla)
 
-out_model <- feols(reg_fmla, 
+out_model <- feols(as.formula(reg_fmla), 
                    data = df
                 )
 
