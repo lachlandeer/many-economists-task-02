@@ -42,24 +42,33 @@ yrs    <- fromJSON(file = data_yrs)
 
 # --- Data Filtering --- #
 message("Here are the Data Filtering Criteria:")
+print("Eligibility:")
 print(elig$KEEP_CONDITION)
+print("Schooling:")
 print(school$KEEP_CONDITION)
+print("Years:")
 print(yrs$KEEP_CONDITION)
 
 # Filter on Eligibility if needed
 if (elig$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
 }
+print("Rows Remaining:")
+nrow(df)
 
 # Filter on Schooling if needed
 if (school$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = school$KEEP_CONDITION)))
 }
+print("Rows Remaining:")
+nrow(df)
 
 # Filter on sample year if needed
 if (yrs$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = yrs$KEEP_CONDITION)))
 }
+print("Rows Remaining:")
+nrow(df)
 
 # --- Construct Regression Formula --- # 
 # Base Regression Formula
@@ -86,6 +95,7 @@ out_model <- feols(as.formula(reg_fmla),
                    data = df
                 )
 
+print("Model Output:")
 summary(out_model)
 
 # --- Export Model --- # 
