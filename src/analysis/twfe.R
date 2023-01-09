@@ -54,21 +54,21 @@ if (elig$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
-nrow(df)
+print(nrow(df))
 
 # Filter on Schooling if needed
 if (school$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = school$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
-nrow(df)
+print(nrow(df))
 
 # Filter on sample year if needed
 if (yrs$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = yrs$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
-nrow(df)
+print(nrow(df))
 
 # --- Construct Regression Formula --- # 
 # Base Regression Formula
