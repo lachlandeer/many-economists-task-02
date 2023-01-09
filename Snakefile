@@ -5,22 +5,37 @@
 # --- Variable Declarations ---# 
 runR = "Rscript --no-save --no-restore --verbose"
 
+FIXEFF        = glob_wildcards("src/model-specs/twfe/twfe_fe_{fname}.json").fname
+CTRLS         = glob_wildcards("src/model-specs/twfe/twfe_controls_{fname}.json").fname
+SUBSET_ELIG   = glob_wildcards("src/data-specs/twfe/eligibility_{fname}.json").fname 
+SUBSET_SCHOOL = glob_wildcards("src/data-specs/twfe/school_{fname}.json").fname
+SUBSET_YRS    = glob_wildcards("src/data-specs/twfe/years_{fname}.json").fname
+
 # --- TWFE Models --- # 
+rule estimate_twfe:
+    input:
+        expand("out/analysis/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
+                iFE = FIXEFF,
+                iControl = CTRLS,
+                iElig = SUBSET_ELIG,
+                iYrs = SUBSET_YRS,
+                iSchool = SUBSET_SCHOOL
+                )
 
 rule twfe:
     input: 
         script      = "src/analysis/twfe.R",
         data        = "out/data/estimation_sample.csv",
         model_base  = "src/model-specs/twfe/twfe_main.json",
-        model_fe    = "src/model-specs/twfe/twfe_fe_simple.json",
-        model_ctrl  = "src/model-specs/twfe/twfe_controls_none.json", 
-        subset_elig = "src/data-specs/twfe/eligibility_age_enter.json",
-        subset_yrs  = "src/data-specs/twfe/years_all.json",
-        subset_hs   = "src/data-specs/twfe/school_all.json", 
+        model_fe    = "src/model-specs/twfe/twfe_fe_{iFE}.json",
+        model_ctrl  = "src/model-specs/twfe/twfe_controls_{iControl}.json", 
+        subset_elig = "src/data-specs/twfe/eligibility_{iElig}.json",
+        subset_yrs  = "src/data-specs/twfe/years_{iYrs}.json",
+        subset_hs   = "src/data-specs/twfe/school_{iSchool}.json", 
     output:
-        model = "out/analysis/twfe_testing.rds",
+        model = "out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
     log:
-        "log/analysis/twfe_testing.Rout"
+        "log/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.Rout"
     shell: 
         "{runR} {input.script} {input.data} \
             {input.model_base} {input.model_fe} {input.model_ctrl} \
