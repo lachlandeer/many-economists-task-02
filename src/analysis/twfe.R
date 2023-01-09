@@ -42,12 +42,10 @@ yrs    <- fromJSON(file = data_yrs)
 
 # --- Data Filtering --- #
 message("Here are the Data Filtering Criteria:")
+
+# eligibility
 print("Eligibility:")
 print(elig$KEEP_CONDITION)
-print("Schooling:")
-print(school$KEEP_CONDITION)
-print("Years:")
-print(yrs$KEEP_CONDITION)
 
 # Filter on Eligibility if needed
 if (elig$KEEP_CONDITION != "NULL") {
@@ -56,6 +54,10 @@ if (elig$KEEP_CONDITION != "NULL") {
 print("Rows Remaining:")
 print(nrow(df))
 
+# School
+print("Schooling:")
+print(school$KEEP_CONDITION)
+
 # Filter on Schooling if needed
 if (school$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = school$KEEP_CONDITION)))
@@ -63,12 +65,16 @@ if (school$KEEP_CONDITION != "NULL") {
 print("Rows Remaining:")
 print(nrow(df))
 
+# year
 # Filter on sample year if needed
 if (yrs$KEEP_CONDITION != "NULL") {
   df <- subset(df, eval(parse(text = yrs$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
 print(nrow(df))
+print("Years:")
+print(yrs$KEEP_CONDITION)
+
 
 # --- Construct Regression Formula --- # 
 # Base Regression Formula
