@@ -37,7 +37,7 @@ fixedeff <- fromJSON(file = model_fixedeff)
 message("Loading Data Filters")
 
 elig   <- fromJSON(file = data_elig)
-school <- fromJSON(file = data_hs)
+schl   <- fromJSON(file = data_hs)
 yrs    <- fromJSON(file = data_yrs)
 
 # --- Data Filtering --- #
@@ -57,11 +57,11 @@ print(nrow(df))
 
 # School
 print("Schooling:")
-print(school$KEEP_CONDITION)
+print(schl$KEEP_CONDITION)
 
 # Filter on Schooling if needed
-if (!setequal(school$KEEP_CONDITION, "NULL")) {
-  df <- subset(df, eval(parse(text = school$KEEP_CONDITION)))
+if (!setequal(schl$KEEP_CONDITION, "NULL")) {
+  df <- subset(df, eval(parse(text = schl$KEEP_CONDITION)))
 }
 print("Rows Remaining:")
 print(nrow(df))
