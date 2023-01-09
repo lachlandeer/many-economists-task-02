@@ -14,7 +14,7 @@ SUBSET_YRS    = glob_wildcards("src/data-specs/twfe/years_{fname}.json").fname
 # --- TWFE Models --- # 
 rule estimate_twfe:
     input:
-        expand("out/analysis/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
+        expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
                 iFE = FIXEFF,
                 iControl = CTRLS,
                 iElig = SUBSET_ELIG,
@@ -33,7 +33,7 @@ rule twfe:
         subset_yrs  = "src/data-specs/twfe/years_{iYrs}.json",
         subset_hs   = "src/data-specs/twfe/school_{iSchool}.json", 
     output:
-        model = "out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
+        model = "out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds"
     log:
         "log/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.Rout"
     shell: 
