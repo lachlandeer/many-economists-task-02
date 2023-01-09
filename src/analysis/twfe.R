@@ -25,7 +25,7 @@ out_file       <- args[8]
 
 # --- Load Data --- # 
 message("Loading Data")
-df <- vroom(aar) 
+df <- vroom(in_data) 
 
 # --- Load Model --- #
 message("Loading Regression Model")
