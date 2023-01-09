@@ -18,9 +18,9 @@ rule twfe:
         subset_yrs  = "src/data-specs/twfe/years_all.json",
         subset_hs   = "src/data-specs/twfe/school_all.json", 
     output:
-        model = "out/analysis/twfe_testing.Rda",
+        model = "out/analysis/twfe_testing.rds",
     log:
-        "log/analysis/twfe_testing.Rda"
+        "log/analysis/twfe_testing.Rout"
     shell: 
         "{runR} {input.script} {input.data} \
             {input.model_base} {input.model_fe} {input.model_ctrl} \
