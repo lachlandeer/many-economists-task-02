@@ -1,0 +1,6 @@
+{
+    "DEPVAR": "fulltime_hrs",
+    "T": "year",
+    "UNITID": "rowname",
+    "AFTER": "after"
+}
