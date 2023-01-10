@@ -94,11 +94,11 @@ message("Model Output:")
 summary(out_model)
 
 message("Simple ATT")
-aggte(out_model, type = "simple")
+aggte(out_model, type = "simple", na.rm = TRUE)
 message("Dynamic ATT")
-aggte(out_model, type = "dynamic")
+aggte(out_model, type = "dynamic", na.rm = TRUE)
 message("Calendar Time ATT")
-aggte(out_model, type = "calendar")
+aggte(out_model, type = "calendar", na.rm = TRUE)
 
 # # --- Export Model --- # 
 write_rds(out_model, out_file)
