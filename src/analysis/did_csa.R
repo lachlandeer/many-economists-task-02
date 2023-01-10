@@ -93,12 +93,12 @@ out_model <-
 message("Model Output:")
 summary(out_model)
 
-# message("Simple ATT")
-# aggte(out_model, type = "simple")
-# message("Dynamic ATT")
-# aggte(out_model, type = "dynamic")
-# message("Calendar Time ATT")
-# aggte(out_model, type = "calendar")
+message("Simple ATT")
+aggte(out_model, type = "simple")
+message("Dynamic ATT")
+aggte(out_model, type = "dynamic")
+message("Calendar Time ATT")
+aggte(out_model, type = "calendar")
 
 # # --- Export Model --- # 
-# write_rds(out_model, out_file)
+write_rds(out_model, out_file)
