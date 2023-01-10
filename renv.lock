@@ -335,6 +335,16 @@
       ],
       "Hash": "eb9fc121ad9a1075c471107ef185be46"
     },
+    "clipr": {
+      "Package": "clipr",
+      "Version": "0.8.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "3f038e5ac7f41d4ac41ce658c85e3042"
+    },
     "colorspace": {
       "Package": "colorspace",
       "Version": "2.0-3",
@@ -1141,6 +1151,29 @@
         "survival"
       ],
       "Hash": "b8b2b861526c344a7e16e5991fa5a4ab"
+    },
+    "readr": {
+      "Package": "readr",
+      "Version": "2.1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "cli",
+        "clipr",
+        "cpp11",
+        "crayon",
+        "hms",
+        "lifecycle",
+        "methods",
+        "rlang",
+        "tibble",
+        "tzdb",
+        "utils",
+        "vroom"
+      ],
+      "Hash": "2dfbfc673ccb3de3d8836b4b3bd23d14"
     },
     "rematch2": {
       "Package": "rematch2",
