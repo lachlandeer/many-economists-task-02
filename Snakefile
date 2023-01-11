@@ -1,6 +1,5 @@
 # manyeconomists
 #
-# @lachlandeer
 # researcher_id: 579
 
 # --- Variable Declarations ---# 
