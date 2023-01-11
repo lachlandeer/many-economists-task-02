@@ -19,6 +19,26 @@ DID_ANTIC         = glob_wildcards("src/model-specs/did/model_anticip_{fname}.js
 DID_SUBSET_ELIG   = glob_wildcards("src/data-specs/did/eligibility_{fname}.json").fname 
 DID_SUBSET_SCHOOL = glob_wildcards("src/data-specs/did/school_{fname}.json").fname
 
+#--- all --- 
+
+rule all: 
+    input: 
+        did = expand("out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}_elig_{iElig}_school_{iSchool}.rds",
+                iAntic = DID_ANTIC,
+                iCtrl = DID_CTRLS,
+                iElig = DID_SUBSET_ELIG,
+                iSchool = DID_SUBSET_SCHOOL
+                ),
+        twfe =  expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
+                iFE = FIXEFF,
+                iControl = CTRLS,
+                iElig = SUBSET_ELIG,
+                iYrs = SUBSET_YRS,
+                iSchool = SUBSET_SCHOOL
+                )
+
+
+
 # ---- MODELLING ---- #
 
 # --- DID ala CSA(2021) ---# 
@@ -109,3 +129,30 @@ rule filter_ethnic_mex:
 # Include all other Snakefiles that contain rules that are part of the project
 include: "renv.smk"
 
+# --- Workflow Viz --- # 
+## rulegraph          : create the graph of how rules piece together 
+rule rulegraph:
+    input:
+        "Snakefile"
+    output:
+        "rulegraph.pdf"
+    shell:
+        "snakemake --rulegraph | dot -Tpdf > {output}"
+
+## rulegraph_to_png
+rule rulegraph_to_png:
+    input:
+        "rulegraph.pdf"
+    output:
+        "rulegraph.png"
+    shell:
+        "pdftoppm -png {input} > {output}"
+
+## dag                : create the DAG as a pdf from the Snakefile
+rule dag:
+    input:
+        "Snakefile"
+    output:
+        "dag.pdf"
+    shell:
+        "snakemake --dag | dot -Tpdf > {output}"
