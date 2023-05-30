@@ -1,4 +1,4 @@
-# Many Economists Project Task 1
+# Many Economists Project Task 2
 
 Researcher ID: 579
 
@@ -11,7 +11,6 @@ You need to have the following software and packages installed:
 1. Python 3 (Python 3.6 or higher)
 2. Snakemake (we'll install the correct version in a couple of lines time!)
 3. R (version 4.0.x)
-   * For R version 3.6.x see an archived version [here](https://github.com/lachlandeer/snakemake-econ-r/tree/archive/r-3.6).
 
 ### Installing Python
 
