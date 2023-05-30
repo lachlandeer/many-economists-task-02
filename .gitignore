@@ -6,3 +6,4 @@ log
 .Rproj.user
 *.csv
 *.pdf
+src/data/*
