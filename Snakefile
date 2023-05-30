@@ -116,7 +116,7 @@ rule clean_estimation_sample:
 rule filter_ethnic_mex:
     input:
         script = "src/data-mgt/filter_ethnic_born_mexicans.R",
-        data = "src/data/usa_00001.csv.gz",
+        data = "src/data/usa_00002.csv.gz",
     output:
         data = "out/data/acs_ethnic_born_mexicans.csv",
     log:
