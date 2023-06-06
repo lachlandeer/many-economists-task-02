@@ -1,7 +1,7 @@
 # twfe.R
 #
 # What this file does:
-#
+#   - TWFE estimation for a DiD study
 
 
 # --- Libraries ---#
@@ -18,10 +18,10 @@ in_data        <- args[1]
 model_base     <- args[2]
 model_controls <- args[3]
 model_fixedeff <- args[4]
-data_elig      <- args[5]
-data_yrs       <- args[6]
-data_hs        <- args[7]
-out_file       <- args[8]
+#data_elig      <- args[5]
+data_yrs       <- args[5]
+#data_hs        <- args[7]
+out_file       <- args[6]
 
 # --- Load Data --- # 
 message("Loading Data")
@@ -36,8 +36,8 @@ fixedeff <- fromJSON(file = model_fixedeff)
 # --- Load Data Filters --- #
 message("Loading Data Filters")
 
-elig   <- fromJSON(file = data_elig)
-schl   <- fromJSON(file = data_hs)
+#elig   <- fromJSON(file = data_elig)
+#schl   <- fromJSON(file = data_hs)
 yrs    <- fromJSON(file = data_yrs)
 
 # --- Data Filtering --- #
@@ -45,26 +45,26 @@ message("We are Starting with ", nrow(df), " rows of data")
 message("Here are the Data Filtering Criteria:")
 
 # eligibility
-print("Eligibility:")
-print(elig$KEEP_CONDITION)
+# print("Eligibility:")
+# print(elig$KEEP_CONDITION)
 
 # Filter on Eligibility if needed
-if (!setequal(elig$KEEP_CONDITION, "NULL")) {
-  df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
-}
-print("Rows Remaining:")
-print(nrow(df))
+# if (!setequal(elig$KEEP_CONDITION, "NULL")) {
+#   df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
+# }
+# print("Rows Remaining:")
+# print(nrow(df))
 
-# School
-print("Schooling:")
-print(schl$KEEP_CONDITION)
+# # School
+# print("Schooling:")
+# print(schl$KEEP_CONDITION)
 
-# Filter on Schooling if needed
-if (!setequal(schl$KEEP_CONDITION, "NULL")) {
-  df <- subset(df, eval(parse(text = schl$KEEP_CONDITION)))
-}
-print("Rows Remaining:")
-print(nrow(df))
+# # Filter on Schooling if needed
+# if (!setequal(schl$KEEP_CONDITION, "NULL")) {
+#   df <- subset(df, eval(parse(text = schl$KEEP_CONDITION)))
+# }
+# print("Rows Remaining:")
+# print(nrow(df))
 
 # year
 print("Years:")

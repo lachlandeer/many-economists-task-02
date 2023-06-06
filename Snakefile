@@ -8,8 +8,8 @@ runR = "Rscript --no-save --no-restore --verbose"
 # For TWFE
 FIXEFF        = glob_wildcards("src/model-specs/twfe/twfe_fe_{fname}.json").fname
 CTRLS         = glob_wildcards("src/model-specs/twfe/twfe_controls_{fname}.json").fname
-SUBSET_ELIG   = glob_wildcards("src/data-specs/twfe/eligibility_{fname}.json").fname 
-SUBSET_SCHOOL = glob_wildcards("src/data-specs/twfe/school_{fname}.json").fname
+#SUBSET_ELIG   = glob_wildcards("src/data-specs/twfe/eligibility_{fname}.json").fname 
+#SUBSET_SCHOOL = glob_wildcards("src/data-specs/twfe/school_{fname}.json").fname
 SUBSET_YRS    = glob_wildcards("src/data-specs/twfe/years_{fname}.json").fname
 
 # For DiD ala CSA(2021)
@@ -28,12 +28,12 @@ rule all:
                 iElig = DID_SUBSET_ELIG,
                 iSchool = DID_SUBSET_SCHOOL
                 ),
-        twfe =  expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
+        twfe =  expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_yr_{iYrs}.rds",
                 iFE = FIXEFF,
                 iControl = CTRLS,
-                iElig = SUBSET_ELIG,
-                iYrs = SUBSET_YRS,
-                iSchool = SUBSET_SCHOOL
+                #iElig = SUBSET_ELIG,
+                iYrs = SUBSET_YRS
+                #iSchool = SUBSET_SCHOOL
                 )
 
 
@@ -72,12 +72,12 @@ rule did:
 # --- TWFE Models --- # 
 rule estimate_twfe:
     input:
-        expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds",
+        expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_yr_{iYrs}.rds",
                 iFE = FIXEFF,
                 iControl = CTRLS,
-                iElig = SUBSET_ELIG,
-                iYrs = SUBSET_YRS,
-                iSchool = SUBSET_SCHOOL
+                #iElig = SUBSET_ELIG,
+                iYrs = SUBSET_YRS
+                #iSchool = SUBSET_SCHOOL
                 )
 
 rule twfe:
@@ -87,17 +87,17 @@ rule twfe:
         model_base  = "src/model-specs/twfe/twfe_main.json",
         model_fe    = "src/model-specs/twfe/twfe_fe_{iFE}.json",
         model_ctrl  = "src/model-specs/twfe/twfe_controls_{iControl}.json", 
-        subset_elig = "src/data-specs/twfe/eligibility_{iElig}.json",
+        #subset_elig = "src/data-specs/twfe/eligibility_{iElig}.json",
         subset_yrs  = "src/data-specs/twfe/years_{iYrs}.json",
-        subset_hs   = "src/data-specs/twfe/school_{iSchool}.json", 
+        #subset_hs   = "src/data-specs/twfe/school_{iSchool}.json", 
     output:
-        model = "out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.rds"
+        model = "out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_yr_{iYrs}.rds"
     log:
-        "log/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_elig_{iElig}_yr_{iYrs}_school_{iSchool}.Rout"
+        "log/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_yr_{iYrs}.Rout"
     shell: 
         "{runR} {input.script} {input.data} \
             {input.model_base} {input.model_fe} {input.model_ctrl} \
-            {input.subset_elig} {input.subset_yrs} {input.subset_hs} \
+            {input.subset_yrs} \
             {output.model} > {log} 2>&1"
 
 # --- Data Cleaning --- # 
