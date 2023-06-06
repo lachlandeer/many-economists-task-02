@@ -18,9 +18,9 @@ in_data        <- args[1]
 model_base     <- args[2]
 model_controls <- args[3]
 model_anticip  <- args[4]
-data_elig      <- args[5]
-data_hs        <- args[6]
-out_file       <- args[7]
+#data_elig      <- args[5]
+#data_hs        <- args[6]
+out_file       <- args[5]
 
 # --- Load Data --- # 
 message("Loading Data")
@@ -33,36 +33,36 @@ controls <- fromJSON(file = model_controls)
 anticip  <- fromJSON(file = model_anticip) 
 
 # --- Load Data Filters --- #
-message("Loading Data Filters")
+# message("Loading Data Filters")
 
-elig   <- fromJSON(file = data_elig)
-schl   <- fromJSON(file = data_hs)
+# elig   <- fromJSON(file = data_elig)
+# schl   <- fromJSON(file = data_hs)
 
 # --- Data Filtering --- #
-message("We are Starting with ", nrow(df), " rows of data")
-message("Here are the Data Filtering Criteria:")
+# message("We are Starting with ", nrow(df), " rows of data")
+# message("Here are the Data Filtering Criteria:")
 
-# eligibility
-print("Eligibility:")
-print(elig$KEEP_CONDITION)
+# # eligibility
+# print("Eligibility:")
+# print(elig$KEEP_CONDITION)
 
-# Filter on Eligibility if needed
-if (!setequal(elig$KEEP_CONDITION, "NULL")) {
-  df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
-}
-print("Rows Remaining:")
-print(nrow(df))
+# # Filter on Eligibility if needed
+# if (!setequal(elig$KEEP_CONDITION, "NULL")) {
+#   df <- subset(df, eval(parse(text = elig$KEEP_CONDITION)))
+# }
+# print("Rows Remaining:")
+# print(nrow(df))
 
-# School
-print("Schooling:")
-print(schl$KEEP_CONDITION)
+# # School
+# print("Schooling:")
+# print(schl$KEEP_CONDITION)
 
-# Filter on Schooling if needed
-if (!setequal(schl$KEEP_CONDITION, "NULL")) {
-  df <- subset(df, eval(parse(text = schl$KEEP_CONDITION)))
-}
-print("Rows Remaining:")
-print(nrow(df))
+# # Filter on Schooling if needed
+# if (!setequal(schl$KEEP_CONDITION, "NULL")) {
+#   df <- subset(df, eval(parse(text = schl$KEEP_CONDITION)))
+# }
+# print("Rows Remaining:")
+# print(nrow(df))
 
 
 # --- Estimation --- #

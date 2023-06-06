@@ -43,11 +43,9 @@ rule all:
 # --- DID ala CSA(2021) ---# 
 rule estimate_did:
     input:
-        expand("out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}_elig_{iElig}_school_{iSchool}.rds",
+        expand("out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}.rds",
                 iAntic = DID_ANTIC,
-                iCtrl = DID_CTRLS,
-                iElig = DID_SUBSET_ELIG,
-                iSchool = DID_SUBSET_SCHOOL
+                iCtrl = DID_CTRLS
                 )
 
 rule did:
@@ -56,17 +54,16 @@ rule did:
         data          = "out/data/estimation_sample.csv",
         model_base    = "src/model-specs/did/model_base.json",
         model_anticip = "src/model-specs/did/model_anticip_{iAntic}.json",
-        model_ctrl    = "src/model-specs/did/model_controls_{iCtrl}.json", 
-        subset_elig   = "src/data-specs/did/eligibility_{iElig}.json",
-        subset_hs     = "src/data-specs/did/school_{iSchool}.json"
+        model_ctrl    = "src/model-specs/did/model_controls_{iCtrl}.json" 
+        #subset_elig   = "src/data-specs/did/eligibility_{iElig}.json",
+        #subset_hs     = "src/data-specs/did/school_{iSchool}.json"
     output:
-        model = "out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}_elig_{iElig}_school_{iSchool}.rds"
+        model = "out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}.rds"
     log:
-        "log/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}_elig_{iElig}_school_{iSchool}.Rout"
+        "log/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}.Rout"
     shell: 
         "{runR} {input.script} {input.data} \
             {input.model_base} {input.model_ctrl} {input.model_anticip} \
-            {input.subset_elig} {input.subset_hs} \
             {output.model} > {log} 2>&1"
 
 # --- TWFE Models --- # 
