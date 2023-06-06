@@ -4,14 +4,20 @@
 #
 #  - Keeps non-citizens
 #  - Generates Indicators for daca rules
-#  - Generates flag for if daca eligible based on rules
+#  - Generates flag for if daca eligible based on rules:
+#       -  Entered before 16th birthday 
+#       - Had not yet had their 31st birthday as of June 15, 2012
+#       - Lived continuously in the US since June 15, 2007  
+#       -  Were present in the US on June 15, 2012 and did not have lawful status
+#          lawful status filtered on previously with citizen 
+#          present on this date if immigrated on or before 2012
+#       - Completed at least high school (12th grade) OR are a veteran of the military
 #  - Generates cleaned up control variables 
 #  - Generates flags for different samples of data for the estimation:
 #     - aged 18 to 35 -- largest sample 
 #     - entered between 12 and 19 -- individuals in the "relevant window" for DACA
 #     - aged between 27 and 34  -- folks where age criteria is an issue for work eligibility
 #     - finished highschool   -- folks that completed high school (effects might differ if did/did not)
-#     - [Not yet implemented] finished college  -- folks that finished college (effects might differ if did did/not)
 
 # --- Libraries ---#
 library(vroom)
@@ -76,6 +82,17 @@ df <-
     df %>%
     mutate(present_2012 = ifelse(yrimmig <= 2012, TRUE, FALSE))
 
+# Rule 5:  Completed at least high school (12th grade) OR are a veteran of the military
+df <- 
+    df %>%
+    mutate(finished_hs = if_else(educ > 6, TRUE, FALSE),
+           is_veteran = if_else(vetstat ==2, TRUE, FALSE)
+           # finish_school_or_veteran = case_when(
+              # finished_hs == TRUE | is_veteran == TRUE ~ TRUE,
+              # TRUE ~ FALSE
+           # )
+    )
+
 # DACA ELIGIBLE
 df <- 
     df %>%
@@ -83,7 +100,9 @@ df <-
         enter_under_16 == TRUE & 
             under_31 == TRUE &
             lived_usa_2006 == TRUE &
-            present_2012 == TRUE ~ TRUE,
+            present_2012 == TRUE  &
+            # finish_school_or_veteran == TRUE ~ TRUE,
+            (finished_hs == TRUE | is_veteran == TRUE) ~ TRUE,
         # else false
         TRUE ~ FALSE
     )
@@ -103,7 +122,7 @@ df <-
 # --- CONTROL VARIABLES --- # 
 # Q: does everyone come from a state with a fips code?
 # A: yes
-df %>% filter(statefip <= 56) %>% nrow()
+# df %>% filter(statefip <= 56) %>% nrow()
 
 # Married
 df <-
@@ -118,46 +137,18 @@ df <-
 
 # --- SAMPLE SELECTION CRITERIA --- #
 # criteria to be included in an estimation sample ... 
-# i.e. we don't think very old or very young people are a good comparison group
-# We set various indicators that we can filter on in the regression analysis
+# i.e. need people to be aged between 26 and 35 on date DACA goes into place
 
-df <-
+sample_upper <- ceiling_date(ymd("2012-06-15"), "quarters") - years(35)
+sample_lower <- ceiling_date(ymd("2012-06-15"), "quarters") - years(26)
+
+
+df_filtered <-
     df %>%
-    mutate(
-        # aged between 18 and 35
-        age_bwtn_18_35 = case_when(
-            age >= 18 & age <=35 ~ TRUE,
-            TRUE ~ FALSE
-        ),
-        # entered US between 12 and 19 -- i.e. around the cutoff for DACA
-        enter_btwn_12_19 = case_when(
-            age_enter_usa >= 12 & age_enter_usa <= 19 ~ TRUE,
-            TRUE ~ FALSE
-        ),
-        # around the age threshold and entered ok, age criterion an issue so we focus on that window
-        age_betwn_27_34_enter_ok = case_when(
-            age >= 27 & age < 34 & enter_under_16 == TRUE ~ TRUE,
-            TRUE ~ FALSE
-        ),
-        # completed high school (was a criteria actually - but not for this study)
-        finished_hs = if_else(educ > 6, TRUE, FALSE)
-    )
+    filter(between(quarter_of_birth, sample_upper, sample_lower))
+
+message("count by if eligible for daca:")
+df_filtered %>% group_by(daca_eligible) %>% count()
 
 # --- Save Data --- # 
-# only keep if between 18 and 35 ?
-df %>%
-    mutate(under_18 = if_else(age < 18, TRUE, FALSE)) %>%
-    filter(under_18 == FALSE) %>%
-    group_by(daca_eligible) %>% 
-    count()
-
-
-df %>% filter(age_bwtn_18_35 == 1) %>% group_by(daca_eligible) %>% count()
-# above says that daca elibility among over 18s is the same group ... so for now we
-# apply this filter
-df_filtered <-
-    df %>% 
-    filter(age_bwtn_18_35 == 1)
-
 vroom_write(df_filtered, out_file, ",")
-
