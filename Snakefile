@@ -22,11 +22,11 @@ DID_SUBSET_SCHOOL = glob_wildcards("src/data-specs/did/school_{fname}.json").fna
 
 rule all: 
     input: 
-        did = expand("out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}_elig_{iElig}_school_{iSchool}.rds",
+        did = expand("out/analysis/did/did_antic_{iAntic}_ctrl_{iCtrl}.rds",
                 iAntic = DID_ANTIC,
-                iCtrl = DID_CTRLS,
-                iElig = DID_SUBSET_ELIG,
-                iSchool = DID_SUBSET_SCHOOL
+                iCtrl = DID_CTRLS
+                #iElig = DID_SUBSET_ELIG,
+                #iSchool = DID_SUBSET_SCHOOL
                 ),
         twfe =  expand("out/analysis/twfe/twfe_fe_{iFE}_ctrl_{iControl}_yr_{iYrs}.rds",
                 iFE = FIXEFF,

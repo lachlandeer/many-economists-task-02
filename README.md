@@ -104,8 +104,6 @@ and NUM_CORES needs to be a number between 1 and the number of cores on your PC.
 
 Depending on the number of cores chosen, it may take a while.
 
-Some subsets of models and data may cause errors when estimating. 
-These models are not utilized in the writeup and can be ignored. 
 Snakemake's `--keep-going` flag will keep the build running even when one or more estimations generate an error.
 
 ## Visualization of the Workflow
@@ -113,6 +111,6 @@ Snakemake's `--keep-going` flag will keep the build running even when one or mor
 Snakemake workflows are a directed acyclic graph (DAG).
 We can visualize the relationship between the rules (a simplified view of the DAG) in our workflow:
 
-![Rulegraph for MEP Task 1](./rulegraph.png)
+![Rulegraph for MEP Task 2](./rulegraph.png)
 
 A DAG of the full workflow is available in the file [dag.pdf](dag.pdf)
