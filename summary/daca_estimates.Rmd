@@ -1,10 +1,11 @@
 ---
 title: "Many Economists Project"
+subtitle: "Task 2"
 author: "Researcher ID: 579"
 output: 
     pdf_document:
         extra_dependencies: ["booktabs", "threeparttable"]
-date: "2023-01-10"
+date: "2023-06-15"
 bibliography: refs.bib  
 ---
 
@@ -26,15 +27,9 @@ knitr::opts_chunk$set(echo = TRUE)
 \midrule
                        & \multicolumn{6}{c}{Panel A: Mexican Non-citizens Who Entered US Between Ages 12 and 19}           \\
 \cmidrule(lr){2-7}
-Intent-to-Treat effect & 0.089                  & 0.096       & 0.041               & 0.045               & 0.048                   & 0.058                  \\
-                       & (0.004)                & (0.005)     & (0.013)             & (0.014)             & (0.013)                 & (0.013)                \\
-No. Observations                 & 116,076                & 105,841     & 116,076             & 105,841             & 116,076                 & 116,076                \\
-\midrule
-                       & \multicolumn{6}{c}{Panel B: All Mexican Non-citizens Aged 18 to 35}           \\
-\cmidrule(lr){2-7}
-Intent-to-Treat Effect & 0.019                  & 0.017       & 0.020               & 0.017               & 0.058                   & 0.050                  \\
-                       & (0.023)                & (0.006)     & (0.006)             & (0.006)             & (0.008)                 & (0.009)                \\
-No. Observations                  & 277,277                & 253,373     & 277,277             & 253,373             & 277,277                 & 277,277                \\
+Intent-to-Treat effect & 0.069   & 0.079   & 0.070   & 0.078   & 0.010    & 0.010    \\
+                       & (0.059) & (0.062) & (0.059) & (0.062) & (0.03)  & (0.04)  \\
+No. Observations                 & 164,856 & 150,000 & 164,856 & 150,000 & 164,856 & 150,000 \\
 \midrule
 Controls               & Yes                    & Yes         & Yes                 & Yes                 & Yes                     & Yes                    \\
 Fixed Effects          & State, Year            & State, Year & State $\times$ Year & State $\times$ Year & No                      & No                     \\
@@ -47,28 +42,21 @@ Anticipation           & No                     & Omit 2012   & No              
 ITT estimates for TWFE come from the interaction term of a regression with full-time hours on DACA Eligilibility, and after 2013 dummy (when the rule change applies) control variables and fixed effects. Estimates from Callaway \& Sant'Anna (2021) DiD are computed using the methods outlined in their paper.
 Control variables for the TWFE estimated include dummy variables for gender, marital status, whether Spanish is the main language of the individual, and age and age entered the US. 
 Control variables for the Doubly Robust method are gender, marital status, whether Spanish is the main language of the individual, and age.
-To account for the DACA rule change starting in mid-2012, but us not knowing when an individual was interviewed, TWFE estimates are presented using data for all years, and data omitting the year 2012 so that anticipation effects are minimized.
-In the Callawat and Sant'Anna (2021) estimation we present estimates robust to 1 year of anticipation effects.
+To account for the DACA rule change starting in mid-2012, but the data collector not knowing when an individual was interviewed, TWFE estimates are presented using data for all years, and data omitting the year 2012 so that anticipation effects are minimized.
+In the Callaway and Sant'Anna (2021) estimation we present estimates robust to 1 year of anticipation effects in Column (6).
 \end{footnotesize}
 \end{tablenotes}
 \end{threeparttable}
 
 \vspace{0.5cm}
 
-Table \ref{tab_main} reports the estimates of the introduction of DACA on the probability of working for two different samples. 
-Panel A of Table \ref{tab_main} reports estimates from the sample of all Mexican non-citizens who entered the United States between the ages of 12 and 19.
-This sample performs a difference-in-difference estimation on individuals who are near the DACA-criteria cutoff for the age of entry into the US (age 16), using individuals just above (aged 17-19) to those just under (12-16) the cutoff.
-Focusing around the age cutoff means our estimates with this sample are using localized data for individuals who are most effected by the change.
-Panel B contains coefficients from the sample of all Mexican non-citizens aged 18 to 35, and uses all 
-This sample is more akin to a standard Difference in Difference model.
-
+Table \ref{tab_main} reports the estimates of the introduction of DACA on the probability being employed full-time. 
 Columns 1 to 4 report intent-to-treat estimates from two way fixed effect models (TWFE).
 In contrast, Columns 4 and 5 report estimates using the Doubly Robust method proposed by @callaway2021difference.
 Unlike the TWFE estimates, these should be robust to having multiple treatment periods, treatment effect heterogeneity and when the parallel trends assumption holds only after conditioning on covariates.
 Looking across columns we see that the the TWFE under estimate the intent to treat effect compared to the doubly robust estimates.
-Our preferred estimate, Column 6 in Panel A, shows that non-citizens eligible for DACA are 5.8 percentage points more likely to be working than non-citizens ineligible for DACA after DACA became available. 
-In other words, DACA increases the likelihood of working by 5.8 percentage points for non-citizens who meet the DACA requirements.
-With approximately 51 percent of all DACA eligible individuals working full-time pre-2012, the estimate implies DACA increases the likelihood of a DACA-eligible individual working by 11.4%.
+Our preferred estimate, Column 6 in Panel A, shows that non-citizens eligible for DACA are 1 percentage points more likely to be working than non-citizens ineligible for DACA after DACA became available, although this estimate is not statistically significant. 
+<!---With approximately 51 percent of all DACA eligible individuals working full-time pre-2012, the estimate implies DACA increases the likelihood of a DACA-eligible individual working by 11.4%. --->
 
 # References
 
