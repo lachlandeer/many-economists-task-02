@@ -1,6 +1,6 @@
 ---
 title: "Many Economists Project"
-subtitle: "Task 2"
+subtitle: "Task 2 -- Revision"
 author: "Researcher ID: 579"
 output: 
     pdf_document:
@@ -25,11 +25,10 @@ knitr::opts_chunk$set(echo = TRUE)
 \cmidrule(lr){2-5}\cmidrule(lr){6-7}
                        & (1)                    & (2)         & (3)                 & (4)                 & (5)                     & (6)                    \\
 \midrule
-                       & \multicolumn{6}{c}{Panel A: Mexican Non-citizens Who Entered US Between Ages 12 and 19}           \\
 \cmidrule(lr){2-7}
-Intent-to-Treat effect & 0.069   & 0.079   & 0.070   & 0.078   & 0.010    & 0.010    \\
-                       & (0.059) & (0.062) & (0.059) & (0.062) & (0.03)  & (0.04)  \\
-No. Observations                 & 164,856 & 150,000 & 164,856 & 150,000 & 164,856 & 150,000 \\
+Intent-to-Treat effect & 0.008   & 0.009   & 0.004   & 0.009   & 0.089    & 0.083    \\
+                       & (0.001) & (0.001) & (0.001) & (0.01) & (0.129)  & (0.150)  \\
+No. Observations                 & 7,513   & 6,800   & 7,513 & 6,800 & 7,513 & 6,800 \\
 \midrule
 Controls               & Yes                    & Yes         & Yes                 & Yes                 & Yes                     & Yes                    \\
 Fixed Effects          & State, Year            & State, Year & State $\times$ Year & State $\times$ Year & No                      & No                     \\
@@ -50,12 +49,31 @@ In the Callaway and Sant'Anna (2021) estimation we present estimates robust to 1
 
 \vspace{0.5cm}
 
+*Sample Selection.*
+I obtain data from IPUMS USA, covering the years 2006 to 2016.
+To arrive at the final sample, I cleaned the data in the following manner.
+First, I select individual's whose citizenship status is “Not a citizen” (CITIZEN variable category 3). 
+I further refine the observations to only include of the respondents who were immigrants of Hispanic origin and were born in Mexico. 
+Second, I removed all the observations in which the age of the respondent in June 2012 was
+below 26 or more than 35 based on their year and quater of birth. 
+Third, I excluded the respondents who arrived in the USA before
+their 16th birthday. Fourth, I only include the respondents who were continuously staying in
+the USA since 2007. Fifth, I include the observations in which the respondents had completed
+at least high school or were military veterans. 
+I have used all individuals who mee these criteria from the sample years running from 2006 to 2016. 
+I consider DACA to be in place for all years from 2013 onwards.
+The final sample that we arrive at consists of respondents who either meet all the criteria for
+being eligible for DACA or meet all the criteria except that of being less than 31 when the policy
+was implemented. Hence, the observations in which the respondents are between the age of 26
+to 31 in June 2012 become the treated group. Correspondingly, the observations in which the
+respondents were in the age group of 31 to 35 in June 2012, constitute the control group.
+
 Table \ref{tab_main} reports the estimates of the introduction of DACA on the probability being employed full-time. 
 Columns 1 to 4 report intent-to-treat estimates from two way fixed effect models (TWFE).
 In contrast, Columns 4 and 5 report estimates using the Doubly Robust method proposed by @callaway2021difference.
 Unlike the TWFE estimates, these should be robust to having multiple treatment periods, treatment effect heterogeneity and when the parallel trends assumption holds only after conditioning on covariates.
 Looking across columns we see that the the TWFE under estimate the intent to treat effect compared to the doubly robust estimates.
-Our preferred estimate, Column 6 in Panel A, shows that non-citizens eligible for DACA are 1 percentage points more likely to be working than non-citizens ineligible for DACA after DACA became available, although this estimate is not statistically significant. 
+Our preferred estimate, Column 6, shows that non-citizens eligible for DACA are 8.3 percentage points more likely to be working than non-citizens ineligible for DACA after DACA became available, although this estimate is not statistically significant. 
 <!---With approximately 51 percent of all DACA eligible individuals working full-time pre-2012, the estimate implies DACA increases the likelihood of a DACA-eligible individual working by 11.4%. --->
 
 # References
