@@ -71,10 +71,10 @@ message("Running Callaway & Sant'Anna's DiD Strategy")
 df <-
     df %>%
     tibble::rownames_to_column() %>%
-    mutate(daca_eligible = as.numeric(daca_eligible),
+    mutate(treatment = as.numeric(as.logical(treatment)),
            rowname = as.numeric(rowname),
            after_2013 = as.numeric(after_2013),
-           after = 2013 * daca_eligible
+           after = 2013 * treatment
            )
 
 # run the model

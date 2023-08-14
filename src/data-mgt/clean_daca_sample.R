@@ -13,11 +13,9 @@
 #          present on this date if immigrated on or before 2012
 #       - Completed at least high school (12th grade) OR are a veteran of the military
 #  - Generates cleaned up control variables 
-#  - Generates flags for different samples of data for the estimation:
-#     - aged 18 to 35 -- largest sample 
-#     - entered between 12 and 19 -- individuals in the "relevant window" for DACA
-#     - aged between 27 and 34  -- folks where age criteria is an issue for work eligibility
-#     - finished highschool   -- folks that completed high school (effects might differ if did/did not)
+#  - Filters individual such that age is between 26 and 35 in June 2012
+#  - Creates treatment and control groups based on daca eligible and age criteria 
+
 
 # --- Libraries ---#
 library(vroom)
@@ -106,6 +104,17 @@ df <-
         # else false
         TRUE ~ FALSE
     )
+    ) %>%
+    mutate(daca_eligible_no_age = case_when(
+        enter_under_16 == TRUE & 
+            #under_31 == TRUE &
+            lived_usa_2006 == TRUE &
+            present_2012 == TRUE  &
+            # finish_school_or_veteran == TRUE ~ TRUE,
+            (finished_hs == TRUE | is_veteran == TRUE) ~ TRUE,
+        # else false
+        TRUE ~ FALSE
+        )
     )
 
 # Add a variable "after_2013" for when daca rules are in place (2013 - onwards)
@@ -147,8 +156,24 @@ df_filtered <-
     df %>%
     filter(between(quarter_of_birth, sample_upper, sample_lower))
 
-message("count by if eligible for daca:")
-df_filtered %>% group_by(daca_eligible) %>% count()
+#nrow(df_filtered)
+
+# --- Construct Treatment and Control groups --- # 
+df_filtered <- 
+    df_filtered %>%
+    mutate(
+        treatment = case_when(
+            (daca_eligible == TRUE & under_31 ==TRUE) ~ "TRUE",
+            (daca_eligible_no_age == TRUE & under_31 ==FALSE) ~ "FALSE",
+            TRUE ~ "NA"
+        )
+    ) %>%
+    filter(treatment != "NA")
+
+df_filtered %>%
+    group_by(treatment, under_31) %>%
+    count()
+
 
 # --- Save Data --- # 
 vroom_write(df_filtered, out_file, ",")

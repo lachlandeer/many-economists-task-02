@@ -1,4 +1,4 @@
 {
     "DEPVAR": "fulltime_hrs",
-    "DID": "after_2013*daca_eligible"
+    "DID": "i(after_2013, daca_eligible, FALSE)"
 }
